@@ -6,7 +6,7 @@ public class Testproduct {
 	{
 	
 
-		  System.out.println("prodcut");
+		  System.out.println("prodcut--");
 
 		
 	}
