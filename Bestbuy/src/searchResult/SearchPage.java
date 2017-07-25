@@ -607,7 +607,7 @@ public class SearchPage extends Base {
 			// Start the test and assign that to Extent test reference variable "test"
 			test=rep.startTest("addToCompare");
 			// log the desired info
-			test.log(LogStatus.INFO, "filterCheck test started");
+			test.log(LogStatus.INFO, "addToCompare test started");
 			System.out.println("addToCompare start");
 			
 			
@@ -660,6 +660,76 @@ public class SearchPage extends Base {
 			
 			
 	}	
+		
+		
+		
+		
+		@Test(priority=7,enabled = true,dependsOnMethods="addToCompare")
+		public void addToCompareVerification() throws IOException, InterruptedException
+		{
+			
+			
+			
+			// Start the test and assign that to Extent test reference variable "test"
+			test=rep.startTest("addToCompareVerification");
+			// log the desired info
+			test.log(LogStatus.INFO, "addToCompareVerification test started");
+			System.out.println("addToCompareVerification start");
+			
+			
+			
+			//search the text computer		
+			type("searchBox_id",prop.getProperty("searchCritera"));
+			takeScreenshot1();
+			
+			
+			//click on search button
+			click("secondSearchSuggestion_xpath");
+						
+			takeScreenshot1();
+			
+			
+			//List<WebElement> list= driver.findElements(By.xpath("//div[@class='pb-hero-price pb-purchase-price']/span[starts-with(@aria-label,'Your price for this item is')]"));
+			List<WebElement> list= driver.findElements(By.xpath("//input[@class='list-item-compare-checkbox']"));
+			int count;
+			
+			System.out.println(count=list.size());
+			int checkboxClickCount=0;
+			try{
+			for (int i=0;i<5;i++)
+			{ 
+			
+			list.get(i).click();
+			checkboxClickCount++;
+			JavascriptExecutor js= ((JavascriptExecutor)driver);
+			js.executeScript("window.scrollBy(0,700)", "");
+			}
+			}
+			catch(Exception e)
+			{
+				reportFail(e);
+			}
+			boolean b=getElement("compareExcessPopUp_id").isDisplayed();
+			takeScreenshot1();
+			
+			if ( b==true)
+			{
+				
+				click("comparePopupClose_xpath");
+				
+				test.log(LogStatus.PASS, "Popup appeard while adding the 5 item");
+			}
+			else
+			{
+				test.log(LogStatus.FAIL, "Popup is not appeard while adding the 5 item");
+			}
+			
+			
+	}	
+		
+		
+		
+		
 		
 		
 	
